@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header/Header.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import { CartProvider } from './context/CartContext';
+
+// Lazy load components
+const PostList = React.lazy(() => import('./components/PostList/PostList'));
+const PostDetails = React.lazy(() => import('./components/PostDetails/PostDetails'));
+
+// Loading component
+const LoadingSpinner = () => (
+  <div className="loading-spinner">
+    <div className="spinner"></div>
+  </div>
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CartProvider>
+      <BrowserRouter>
+        <div className="app-container">
+          <Header />
+          <main className="main-content">
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                <Route path="/products" element={<PostList />} />
+                <Route path="/post/:id" element={<PostDetails />} />
+              </Routes>
+            </Suspense>
+          </main>
+        
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </CartProvider>
   );
 }
 

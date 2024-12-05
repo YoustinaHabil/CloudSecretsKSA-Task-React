@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Add these styles for RTL support */
+[dir="rtl"] body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+[dir="rtl"] .post-card,
+[dir="rtl"] .post-details-card {
+  text-align: right;
+}
+
+[dir="rtl"] .search-container,
+[dir="rtl"] .card-actions,
+[dir="rtl"] .modal-buttons {
+  flex-direction: row-reverse;
+}
